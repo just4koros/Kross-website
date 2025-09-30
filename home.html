@@ -24,17 +24,6 @@
   <button>Request Ride</button>
 </a>
   <script>
-  const map = L.map('map').setView([-1.286389, 36.817223], 13); // Nairobi coordinates
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
-
-  L.marker([-1.286389, 36.817223]).addTo(map)
-    .bindPopup('You are here: Nairobi CBD')
-    .openPopup();
-</script>
-  <script>
   const map = L.map('map').setView([-1.286389, 36.817223], 13); // Nairobi CBD
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -78,5 +67,6 @@
 </script>
 </body>
 </html>
+
 
 
