@@ -33,6 +33,47 @@
   L.marker([-1.286389, 36.817223]).addTo(map)
     .bindPopup('You are here: Nairobi CBD')
     .openPopup();
+  const map = L.map('map').setView([-1.286389, 36.817223], 13); // Nairobi CBD
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  const marker = L.marker([-1.286389, 36.817223]).addTo(map)
+    .bindPopup('You are here: Nairobi CBD')
+    .openPopup();
+
+  document.getElementById("requestBtn").addEventListener("click", () => {
+    const destination = document.getElementById("destinationInput").value;
+    if (destination.trim() === "") {
+      alert("Please enter a destination.");
+      return;
+    }
+
+    // Geocode the destination
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.length === 0) {
+          alert("Location not found. Try something more specific.");
+          return;
+        }
+
+        const lat = data[0].lat;
+        const lon = data[0].lon;
+
+        L.marker([lat, lon]).addTo(map)
+          .bindPopup(`Destination: ${destination}`)
+          .openPopup();
+
+        map.setView([lat, lon], 14);
+      })
+      .catch(error => {
+        console.error("Geocoding error:", error);
+        alert("Something went wrong. Try again.");
+      });
+  });
 </script>
 </body>
 </html>
+
