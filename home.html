@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<!-- Leaflet JS -->
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home - KROSS</title>
@@ -8,10 +18,22 @@
 </head>
 <body class="home">
   <div class="logo">KROSS</div>
-  <div class="map-placeholder">[ Nairobi Map Placeholder ]</div>
+<div id="map"></div>
   <input type="text" placeholder="Where to?" />
   <a href="status.html">
   <button>Request Ride</button>
 </a>
+  <script>
+  const map = L.map('map').setView([-1.286389, 36.817223], 13); // Nairobi coordinates
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  L.marker([-1.286389, 36.817223]).addTo(map)
+    .bindPopup('You are here: Nairobi CBD')
+    .openPopup();
+</script>
 </body>
 </html>
+
