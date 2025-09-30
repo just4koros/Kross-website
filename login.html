@@ -9,19 +9,19 @@
 <body class="login">
   <div class="logo">KROSS</div>
   <div class="welcome">Welcome to Kross</div>
-<input type="text" id="phoneInput" placeholder="Enter your phone number" />
-<button id="continueBtn">Continue</button>
+  <input type="text" id="phoneInput" placeholder="Enter your phone number" />
+  <button id="continueBtn">Continue</button>
   <p class="terms">By continuing, you agree to our Terms & Privacy Policy</p>
+
   <script>
-  document.getElementById("continueBtn").addEventListener("click", function () {
-    const phone = document.getElementById("phoneInput").value;
-    if (phone.trim() === "") {
-      alert("Please enter your phone number.");
-    } else {
-      // Simulate login success and redirect to home
-      window.location.href = "home.html";
-    }
-  });
-</script>
+    document.getElementById("continueBtn").addEventListener("click", function () {
+      const phone = document.getElementById("phoneInput").value;
+      if (phone.trim() === "") {
+        alert("Please enter your phone number.");
+      } else {
+        window.location.href = "home.html";
+      }
+    });
+  </script>
 </body>
 </html>
