@@ -193,4 +193,11 @@ body.confirmation {
   font-weight: bold;
   font-size: 16px;
 }
+#map {
+  width: 90%;
+  height: 300px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
 
