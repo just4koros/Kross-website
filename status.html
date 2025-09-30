@@ -10,14 +10,37 @@
   <div class="logo">KROSS</div>
   <div class="status-message">Searching for a driver…</div>
   <div class="spinner"></div>
+  <div id="countdown">Driver arriving in <span id="timer">10</span> seconds…</div>
+
+  <div id="driverCard" class="driver-card" style="display: none;">
+    <h3>Driver Found!</h3>
+    <p><strong>Name:</strong> James Mwangi</p>
+    <p><strong>Car:</strong> Toyota Axio – KDA 123X</p>
+    <p><strong>Phone:</strong> <a href="tel:+254712345678">+254 712 345 678</a></p>
+    <a href="confirmation.html"><button class="confirm-btn">Complete Ride</button></a>
+  </div>
+
   <a href="home.html"><button class="cancel-btn">Cancel Ride</button></a>
-  <a href="confirmation.html"><button class="confirm-btn">Complete Ride</button></a>
-  <div class="driver-card">
-  <h3>Driver Found!</h3>
-  <p><strong>Name:</strong> James Mwangi</p>
-  <p><strong>Car:</strong> Toyota Axio – KDA 123X</p>
-  <p><strong>Phone:</strong> <a href="tel:+254712345678">+254 712 345 678</a></p>
-</div>
+
+  <script>
+    let timeLeft = 10;
+    const timerDisplay = document.getElementById("timer");
+    const driverCard = document.getElementById("driverCard");
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        document.querySelector(".status-message").textContent = "Driver is here!";
+        document.querySelector(".spinner").style.display = "none";
+        document.getElementById("countdown").style.display = "none";
+        driverCard.style.display = "block";
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
+
 
