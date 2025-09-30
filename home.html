@@ -14,51 +14,68 @@
   <input type="text" id="destinationInput" placeholder="Where to?" />
   <button id="requestBtn">Request Ride</button>
 
-  <script>
-    const map = L.map('map').setView([-1.286389, 36.817223], 13);
+<script>
+  // Initialize the map centered on Nairobi CBD
+  const map = L.map('map').setView([-1.286389, 36.817223], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
 
-    L.marker([-1.286389, 36.817223]).addTo(map)
-      .bindPopup('You are here: Nairobi CBD')
-      .openPopup();
+  // Add pickup marker
+  const pickupCoords = [-1.286389, 36.817223];
+  L.marker(pickupCoords).addTo(map)
+    .bindPopup('You are here: Nairobi CBD')
+    .openPopup();
 
-    document.getElementById("requestBtn").addEventListener("click", () => {
-      const destination = document.getElementById("destinationInput").value;
-      if (destination.trim() === "") {
-        alert("Please enter a destination.");
-        return;
-      }
+  // Handle destination input and draw route
+  document.getElementById("requestBtn").addEventListener("click", () => {
+    const destination = document.getElementById("destinationInput").value;
+    if (destination.trim() === "") {
+      alert("Please enter a destination.");
+      return;
+    }
 
-      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.length === 0) {
-            alert("Location not found. Try something more specific.");
-            return;
-          }
+    // Geocode destination
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${destination}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.length === 0) {
+          alert("Location not found. Try something more specific.");
+          return;
+        }
 
-          const lat = data[0].lat;
-          const lon = data[0].lon;
+        const lat = parseFloat(data[0].lat);
+        const lon = parseFloat(data[0].lon);
+        const destinationCoords = [lat, lon];
 
-          L.marker([lat, lon]).addTo(map)
-            .bindPopup(`Destination: ${destination}`)
-            .openPopup();
+        // Add destination marker
+        L.marker(destinationCoords).addTo(map)
+          .bindPopup(`Destination: ${destination}`)
+          .openPopup();
 
-          map.setView([lat, lon], 14);
+        // Draw route line
+        L.polyline([pickupCoords, destinationCoords], {
+          color: '#F4A261',
+          weight: 4,
+          opacity: 0.8,
+          smoothFactor: 1
+        }).addTo(map);
 
-          setTimeout(() => {
-            window.location.href = "status.html";
-          }, 2000);
-        })
-        .catch(error => {
-          console.error("Geocoding error:", error);
-          alert("Something went wrong. Try again.");
-        });
-    });
-  </script>
+        // Zoom to destination
+        map.setView(destinationCoords, 14);
+
+        // Simulate ride request flow
+        setTimeout(() => {
+          window.location.href = "status.html";
+        }, 2000);
+      })
+      .catch(error => {
+        console.error("Geocoding error:", error);
+        alert("Something went wrong. Try again.");
+      });
+  });
+</script>
 </body>
 </html>
 
